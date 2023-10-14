@@ -1,5 +1,5 @@
 """
-Module displays the greeting text "Hello world!" in the terminal, using the built-in function 'print'
+Вивести елементарний Hello World!
 """
 
 print("Hello world!")
