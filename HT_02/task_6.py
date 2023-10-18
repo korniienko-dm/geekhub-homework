@@ -10,6 +10,6 @@ group_values = [1, 2, 'u', 'a', 4, True]
 
 user_enter_value = input("Please enter value:\n")
 
-result_convert_values_to_str = " ".join(map(str, group_values))
+result_convert_values_to_str = list(map(str, group_values))
 
 print(user_enter_value in result_convert_values_to_str)
