@@ -5,10 +5,10 @@ Write a script that combines three dictionaries by updating the first one.
 
 
 dict_1 = {1: 'one',
-                  2: 'two',
-                  3: 'three',
-                  4: 'four',
-                  5: 'five'}
+          2: 'two',
+          3: 'three',
+          4: 'four',
+          5: 'five'}
 
 dict_2 = {6: 'six',
           7: 'seven',
