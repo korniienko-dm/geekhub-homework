@@ -7,6 +7,24 @@
 
 # Homework list
 
-> #### HT_01 : 13-10-2023 : First task   
+> #### HT_01 : 13-10-2023  
 > - Create homework repository;   
 > - Create file "task_1.py" with the greeting "Hello world!".
+
+___
+
+
+> #### HT_02 : 17-10-2023  
+> ![HT_02 img]((https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_02.png))
+
+___
+
+
+> #### HT_03 : 19-10-2023  
+> ![HT_03 img]((https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_03.png))
+
+___
+
+
+> #### HT_04 : 25-10-2023  
+> ![HT_04 img]((https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_04.png))
