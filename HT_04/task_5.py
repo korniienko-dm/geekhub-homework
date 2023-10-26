@@ -19,13 +19,14 @@ while True:
     try:
         user_input = input("\nPlease enter your answer: ")
 
-        if int(user_input) != captcha_valid_answer:
-            raise ValueError
+        if int(user_input) == captcha_valid_answer:
+            print(f"\nValidation passed your value: {user_input} is correct!")
+            break
     
     except ValueError as text_error:
         print(f"\n\n\nValueError: {user_input} is not correct value. Please enter the value again.")
         continue
 
     else:
-        print(f"\nValidation passed your value: {user_input} is correct!")
+        print(f"\nWrong answer: {user_input} is not correct value. Please enter the value again.")
         break

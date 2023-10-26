@@ -20,7 +20,7 @@ class SpecificError(Exception):
 python_is_cool = False
 
 try:
-    if python_is_cool == False:
+    if not python_is_cool:
         raise SpecificError("Error - Wrong meaning about cool.")
 
 except SpecificError as text_error:
