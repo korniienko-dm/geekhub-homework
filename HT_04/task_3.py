@@ -13,7 +13,7 @@ class InvalidAgeError(Exception):
 user_input = int(input("Please enter a your age (positive integer): "))
 
 try:
-    if user_input not in range(18, 121):
+    if not (18 <= user_input <= 120):
         raise InvalidAgeError("Custom Error: 'InvalidAgeError' - Value is not correct.")
 
 except InvalidAgeError as text_error:
