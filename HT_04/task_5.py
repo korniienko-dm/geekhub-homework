@@ -23,10 +23,9 @@ while True:
             print(f"\nValidation passed your value: {user_input} is correct!")
             break
     
-    except ValueError as text_error:
+    except ValueError:
         print(f"\n\n\nValueError: {user_input} is not correct value. Please enter the value again.")
         continue
 
     else:
-        print(f"\nWrong answer: {user_input} is not correct value. Please enter the value again.")
-        break
+        print(f"\n\nWrong answer: {user_input} is not correct value. Please enter the value again.")
