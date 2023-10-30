@@ -37,8 +37,7 @@ def calculate_expression(first_operand: int, second_operand: int, math_operation
 
     if math_operation in math_operator_collection:
         try:
-            result_math_operation = math_operator_collection[math_operation](
-                first_operand, second_operand)
+            result_math_operation = math_operator_collection[math_operation](first_operand, second_operand)
         except Exception as text_error:
             return f'Error! Details: {text_error}'
         else:
@@ -51,12 +50,16 @@ def calculate_expression(first_operand: int, second_operand: int, math_operation
 try:
     first_operand = int(input("Plese enter a first number:\n"))
     second_operand = int(input("Plese enter a second number:\n"))
+
 except Exception as text_error:
     print(f'Error! Details: {text_error}')
+
 else:
     math_operation = input('Enter a math operation\n(" +", "-", "*", "/", "%", "//", "**"):\n')
 
+
 try:
     print(calculate_expression(first_operand, second_operand, math_operation))
+
 except NameError as text_error:
     print(f'Error! Details: {text_error}')
