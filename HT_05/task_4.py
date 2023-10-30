@@ -30,18 +30,18 @@ def string_calc_simbol(row_checked: str):
     digits_count = [i for i in digits_count if i != 0]
 
 
-    if (30 <= len(row_checked) <= 50):
+    if 30 <= len(row_checked) <= 50:
         output_row_count = f"\nRow length: {symbol_len}\n"      
         output_letter_count = f"Count of letters in a row: {len(char_count)}\n"
         output_number_count = f"Count of numbers in a row: {len(number_count)}"
         return f"{output_row_count}{output_letter_count}{output_number_count}"
 
-    elif (len(row_checked) < 30):
+    elif len(row_checked) < 30:
         sum_all_digit = f"\nSum all digits in row: {sum(digits_count)}\n"
         all_char_symbol = f"All char symbol: {''.join(char_count)}"
-        return (f'{sum_all_digit}{all_char_symbol}')
+        return f'{sum_all_digit}{all_char_symbol}'
     
-    elif (len(row_checked) > 50):
+    elif len(row_checked) > 50:
         hash_from_row = hash(row_checked)
         return f"\nThe result of a hash function for a row: \n{hash_from_row}"
         

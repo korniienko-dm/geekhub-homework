@@ -20,12 +20,18 @@ def season(month_number: int):
                       "summer": [6, 7, 8],
                       "autumn": [9, 10, 11]}
 
-    for i in season_of_year:
-        if month_number in season_of_year[i]:
-            return f"Month number {month_number} - is a {i} month."
+    for season_name, season_month_number in season_of_year.items():
+        if month_number in season_month_number:
+            return f"Month number {month_number} - is a {season_name} month."
             
     return f'Error: Value "{month_number}" is not a correct month number.'
 
 
-get_user_month = int(input("Please enter number of month: "))
-print(season(get_user_month))
+try:
+    get_user_month = int(input("Please enter number of month: "))
+
+except ValueError as text_error:
+    print(f"Error!: Details: {text_error}")
+
+else:
+    print(season(get_user_month))
