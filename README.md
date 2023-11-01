@@ -39,4 +39,4 @@ ___
 
 
 > #### HT_06 : 31-10-2023  
-> ![HT_05 img](https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_06.png)
+> ![HT_06 img](https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_06.png)
