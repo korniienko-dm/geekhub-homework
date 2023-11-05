@@ -152,12 +152,12 @@ def user_validate(username: str, password: str) -> tuple:
     return (username_validation_result[0], password_validation_result[0])
 
 
-for name_and_pass in username_and_password_data.items():
-    print(f"Name: {name_and_pass[0]}")
-    print(f"Password: {name_and_pass[1]}")
+for usrname, passwd in username_and_password_data.items():
+    print(f"Name: {usrname}")
+    print(f"Password: {passwd}")
 
     status = list()
-    check_name_and_pass = user_validate(name_and_pass[0], name_and_pass[1])
+    check_name_and_pass = user_validate(usrname, passwd)
 
     if check_name_and_pass == (True, True):
         status.append('OK')
