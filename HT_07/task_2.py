@@ -115,24 +115,33 @@ def user_validate(username: str, password: str) -> tuple:
     Returns:
     tuple: A tuple containing the validation result for username and password.
     """
-    username_validation_result = usernmae_validation(username)
-    password_validation_result = password_validation(password)
-
     try:
-        if username_validation_result[0] is False:
-            raise UsernameValidationError("Username error validation!")
-    except UsernameValidationError as text_error:
-        print(f"Error, detail: {text_error}")
-        return [x for x in username_validation_result[1] if username_validation_result[1][x] is False]
+        if not isinstance(username, str):
+            raise TypeError("TypeError: 'username' variable must be a <str> only!")
 
-    try:
-        if password_validation_result[0] is False:
-            raise PasswordValidationError("Password error validation!")
-    except PasswordValidationError as text_error:
-        print(f"Error, detail: {text_error}")
-        return [x for x in password_validation_result[1] if password_validation_result[1][x] is False]
+        if not isinstance(password, str):
+            raise TypeError("TypeError: 'password' variable must be a <str> only!")
 
-    return (username_validation_result[0], password_validation_result[0])
+    except TypeError as text_error:
+        return text_error
+    else:
+        username_validation_result = usernmae_validation(username)
+        password_validation_result = password_validation(password)
+
+        try:
+            if username_validation_result[0] is False:
+                raise UsernameValidationError("\n".join([x for x in username_validation_result[1] if username_validation_result[1][x] is False]))
+
+            if password_validation_result[0] is False:
+                raise PasswordValidationError("\n".join([x for x in password_validation_result[1] if password_validation_result[1][x] is False]))
+
+        except UsernameValidationError as username_error:
+            return f"UsernameValidationError: {username_error}"
+
+        except PasswordValidationError as password_error:
+            return f"PasswordValidationError: {password_error}"
+
+        return (username_validation_result[0], password_validation_result[0])
 
 
-print(user_validate(username="user", password="Somepassword1"))
+print(user_validate(username="uss", password="Somepasswo1"))

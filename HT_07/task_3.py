@@ -21,25 +21,17 @@ Task_3:
 import re
 
 
-class UsernameValidationError(Exception):
-    """Exception raised for invalid username format."""
-
-
-class PasswordValidationError(Exception):
-    """Exception raised for invalid password format."""
-
-
-username_and_password_data = {'na': 'mypaSS123',
-                              'username002': 'Password',
-                              'username003': 'password1',
-                              'usernmae004': 'Mypass32332',
-                              'firstname': 'psPS001abc',
-                              'nameUser01': 'vordPASS022',
-                              'aa': 'AAgfrfdret',
-                              'usernmae': 'sOmePassword',
-                              'usrINsytem': '12ZHGsometext',
-                              'usernmae001': 'abc',}
-
+usernames_and_passwords_data = [['na', 'mypaSS123'],
+                               ['username002', 'Password'],
+                               ['username003', 'password1'],
+                               ['usernmae004', 'Mypass32332'],
+                               ['firstname', 'psPS001abc'],
+                               ['nameUser01', 'vordPASS022'],
+                               ['cc', 'AAgfrfdret'],
+                               ['usernmae', 'sOmePassword'],
+                               ['usrINsytem', '12ZHGsometext'],
+                               ['aa', 'abc'],
+                               ['usernmae001', 'abc']]
 
 def usernmae_validation(username: str) -> tuple:
     """
@@ -132,42 +124,64 @@ def user_validate(username: str, password: str) -> tuple:
     password (str): The password to be validated.
 
     Returns:
-    tuple: A tuple containing the validation result for username and password.
+    tuple:
+        - tuple[0] containing the validation result for the username;
+        - tuple[1] containing the validation result for the password;
+        - tuple[2] list of failed validation steps for the username;
+        - tuple[3] list of failed validation steps for the password.
     """
-    username_validation_result = usernmae_validation(username)
-    password_validation_result = password_validation(password)
-
     try:
-        if username_validation_result[0] is False:
-            raise UsernameValidationError("Username error validation!")
-    except UsernameValidationError:
-        return [x for x in username_validation_result[1] if username_validation_result[1][x] is False]
+        if not isinstance(username, str):
+            raise TypeError("TypeError: 'username' variable must be a <str> only!")
 
-    try:
-        if password_validation_result[0] is False:
-            raise PasswordValidationError("Password error validation!")
-    except PasswordValidationError:
-        return [x for x in password_validation_result[1] if password_validation_result[1][x] is False]
+        if not isinstance(password, str):
+            raise TypeError("TypeError: 'password' variable must be a <str> only!")
 
-    return (username_validation_result[0], password_validation_result[0])
-
-
-for usrname, passwd in username_and_password_data.items():
-    print(f"Name: {usrname}")
-    print(f"Password: {passwd}")
-
-    status = list()
-    check_name_and_pass = user_validate(usrname, passwd)
-
-    if check_name_and_pass == (True, True):
-        status.append('OK')
-        status.append('\n')
+    except TypeError as text_error:
+        return text_error
     else:
-        status.append("ERROR: Validation failed\n")
-        for validation_error_text in check_name_and_pass:
-            status.append(f"{validation_error_text}")
-            status.append('\n')
-    status.pop()
+        username_validation_req = usernmae_validation(username)
+        password_validation_req = password_validation(password)
 
-    print(f"Status: {''.join(status)}")
-    print("-----------------")
+        username_validation_result = username_validation_req[0]
+        password_validation_result = password_validation_req[0]
+
+        username_check_step = username_validation_req[1]
+        password_check_step = password_validation_req[1]
+
+        username_error_step = [x for x in username_check_step if username_check_step[x] is False]
+        password_error_step = [x for x in password_check_step if password_check_step[x] is False]
+
+        return (username_validation_result, password_validation_result, username_error_step, password_error_step)
+
+
+for user_pass in usernames_and_passwords_data:
+    try:
+        if not isinstance(user_pass[0], str):
+            raise TypeError("TypeError: 'username' variable must be a <str> only!")
+
+        if not isinstance(user_pass[1], str):
+            raise TypeError("TypeError: 'password' variable must be a <str> only!")
+
+    except TypeError as text_error:
+        print(text_error)
+        break
+    else:
+        print(f"Name: {user_pass[0]}")
+        print(f"Password: {user_pass[1]}")
+
+        status = list()
+        check_name_and_pass = user_validate(user_pass[0], user_pass[1])
+
+        if check_name_and_pass[0] == (True) and check_name_and_pass[1] == (True):
+            status.append('OK')
+            status.append('\n')
+        else:
+            status.append("ERROR: Validation failed\n")
+            for validation_error_text in check_name_and_pass[2] + check_name_and_pass[3]:
+                status.append(f"{validation_error_text}")
+                status.append('\n')
+        status.pop()
+
+        print(f"Status: {''.join(status)}")
+        print("-----------------")
