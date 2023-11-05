@@ -49,27 +49,30 @@ def usernmae_validation(username: str) -> tuple:
     username (str): The username to be validated.
 
     Regular expression pattern:
-    ^ - Start of the string.
-    [A-Za-z0-9_] - Matches any uppercase letter, lowercase letter, digit, or underscore.
-    {3,50} - Specifies the allowed length of the username, between 3 and 50 characters.
-    $ - End of the string.
+        Username must contain at least 3 characters
+        rulle_pattern_01 = r"^.{3,}$"
+
+        Username must not exceed 50 characters
+        rulle_pattern_02 = r"^.{1,50}$"
 
     Returns:
-    bool: True if the username is valid, False otherwise.
+    tuple: A tuple containing two values:
+        - validation_result (bool): True if the username is valid, False if it's not.
+        - username_verification_steps (dict): A dictionary with validation steps as keys
+          and their results (True or False) as values.
     """
     username_verification_steps = {"Username must contain at least 3 characters": False,
                                    "Username must not exceed 50 characters": False,}
-    # Username must contain at least 3 characters
+
     rulle_pattern_01 = r"^.{3,}$"
-    # Username must not exceed 50 characters
     rulle_pattern_02 = r"^.{1,50}$"
     
     username_verification_steps['Username must contain at least 3 characters'] = bool(re.match(rulle_pattern_01, username))
     username_verification_steps['Username must not exceed 50 characters'] = bool(re.match(rulle_pattern_02, username))
     
     validation_result = True
-    for i in username_verification_steps:
-        if username_verification_steps[i] is False:
+    for step in username_verification_steps:
+        if username_verification_steps[step] is False:
             validation_result = False
             break
 
@@ -84,24 +87,27 @@ def password_validation(password: str) -> tuple:
     password (str): The password to be validated.
 
     Regular expression pattern:
-    ^ - Start of the string.
-    (?=.*[0-9]) - Ensuring the presence of at least one digit (0-9).
-    (?=.*[A-Z]) - Ensuring the presence of at least one uppercase letter (A-Z).
-    .{8,} - Matches any character (except newline) at least 8 or more times.
-    $ - End of the string.
+        Password must contain at least 8 characters
+        rulle_pattern_01 = r".{8,}$"
+
+        Password must contain at least one digit
+        rulle_pattern_02 = r".*\d+.*"
+
+        Password must contain at least one uppercase letter
+        rulle_pattern_03 = r".*[A-Z]+.*"
 
     Returns:
-    bool: True if the password is valid, False otherwise.
+    tuple: A tuple containing two values:
+        - validation_result (bool): True if the password is valid, False if it's not.
+        - pass_verification_steps (dict): A dictionary with validation steps as keys
+          and their results (True or False) as values.
     """
     pass_verification_steps = {"Password must contain at least 8 characters": False,
                               "Password must contain at least one digit": False,
                               "Password must contain at least one uppercase letter": False}
 
-    # Password must contain at least 8 characters
     rulle_pattern_01 = r".{8,}$"
-    #Password must contain at least one digit
     rulle_pattern_02 = r".*\d+.*"
-    #Password must contain at least one uppercase letter
     rulle_pattern_03 = r".*[A-Z]+.*"
 
     pass_verification_steps['Password must contain at least 8 characters'] = bool(re.match(rulle_pattern_01, password))
@@ -109,8 +115,8 @@ def password_validation(password: str) -> tuple:
     pass_verification_steps['Password must contain at least one uppercase letter'] = bool(re.match(rulle_pattern_03, password))
 
     validation_result = True
-    for i in pass_verification_steps:
-        if pass_verification_steps[i] is False:
+    for step in pass_verification_steps:
+        if pass_verification_steps[step] is False:
             validation_result = False
             break
 
