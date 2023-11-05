@@ -40,3 +40,9 @@ ___
 
 > #### HT_06 : 31-10-2023  
 > ![HT_06 img](https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_06.png)
+
+___
+
+
+> #### HT_07 : 02-11-2023  
+> ![HT_07 img](https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_07.png)
