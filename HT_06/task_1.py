@@ -2,17 +2,17 @@
 Task_1:
 Написати функцію <square>, яка прийматиме один аргумент - сторону квадрата,
 і вертатиме 3 значення у вигляді кортежа: периметр квадрата, площа квадрата
-та його діагональ. 
+та його діагональ.
 """
 
 
 def get_perimete_square(square_side: int) -> int:
     """
     Calculate the perimeter of a square.
-    
+
     Parameters:
     side (int): The length of one side of the square.
-    
+
     Returns:
     int: The perimeter of the square, calculated as 4 times the side length.
     """
@@ -23,10 +23,10 @@ def get_perimete_square(square_side: int) -> int:
 def get_area_square(square_side: int) -> int:
     """
     Calculate the area of a square.
-    
+
     Parameters:
     side (int): The length of one side of the square.
-    
+
     Returns:
     int: The area of the square, calculated as the square of the side length.
     """

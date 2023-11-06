@@ -19,49 +19,35 @@ class LoginException(Exception):
 
 def get_data_base() -> dict:
     """Return a database of user credentials as a dictionary."""
-    db_users = {
-        'user_001': 'somepass001',
-        'user_002': 'somepass002',
-        'user_003': 'somepass003',
-        'user_004': 'somepass004',
-        'user_005': 'somepass005'}
-
+    db_users = [{'username': 'user_001', 'password': 'somepass001'},
+                {'username': 'user_002', 'password': 'somepass002'},
+                {'username': 'user_003', 'password': 'somepass003'},
+                {'username': 'user_004', 'password': 'somepass004'},
+                {'username': 'user_005', 'password': 'somepass005'},]
     return db_users
 
 
 def check_user_verification(username: str, password: str, database: dict) -> bool:
     """
-    Verify user credentials against the given database.
-
-    Parameters:
-    username (str): The username to verify.
-    password (str): The password to verify.
-    database (dict): The user database to check against.
-
-    Returns:
-    bool: True if the provided credentials match the database, False otherwise.
+    Verify user credentials against the given list of dictionaries.
     """
-    result = database.get(username) == password
-
-    return result
+    for user in database:
+        if user['username'] == username and user['password'] == password:
+            return True
+    return False
 
 
 def get_autentification_result(username: str, password: str, silent=False):
     """
-    Authenticate a user and return the authentication result.
+    Validate user credentials and return the result.
 
-    Parameters:
-    username (str): The username to authenticate.
-    password (str): The password to use for authentication.
-    silent (bool, optional): If True, suppress exceptions and return a
-    boolean result. If False, raise an exception in case of authentication
-    failure.
+    If "silent mode" is True and authentication fails, the function will return
+    False instead of raising exceptions.
 
-    Returns:
-    bool or str: If "silent" is True, return a boolean indicating the
-    authentication result. If silent is False, return an exception
-    message in case of authentication failure.
+    If "silent mode" is False (default), and authentication fails, a LoginException
+    will be raised with an error message.
     """
+
     result_check = check_user_verification(username, password, database=get_data_base())
 
     if bool(not result_check and silent):

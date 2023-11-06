@@ -46,16 +46,16 @@ def bank(years: int, a: int or float, percents=10):
 
     if years < 0 or a < 0 or percents < 0:
         return "Error! All parameters must be non-negative."
-    
+
     amount = a
     for i in range(years):
         amount += procent_calculate(percents, amount)
 
-    # Show results    
+    # Show results
     amount_int = int(amount)
     round_amount = round(amount, 2)
     print(f"Sum for your wallet: {amount_int}")
-    return round_amount 
+    return round_amount
 
 
 print(bank(4, 1500))
