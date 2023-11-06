@@ -19,6 +19,17 @@ Task_4:
 def get_morse_simbol_decode() -> dict:
     """
     Returns a dictionary for decoding Morse code symbols to English letters.
+
+    Parameters:
+    morse_code_str (str): The input Morse code string to be decoded.
+        Use only simbol:
+        "Dot" -    ".";
+        "Dashes" - "-";
+        "Spaces" - " ";
+
+        Separators:
+        "One space" = "New letter"
+        "Three spaces" = "New word"
     """
     morse_simbol = {
         '.-': 'A',
