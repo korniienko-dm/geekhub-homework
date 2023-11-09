@@ -15,7 +15,7 @@ def get_different_array(first_list: list, second_list: list) ->  list:
     Return a list containing elements from the first_list that are not found in the second_list.
     """
 
-    return list((ellement for ellement in first_list if not second_list.count(ellement)))
+    return list(ellement for ellement in first_list if not second_list.count(ellement))
 
 
 print(get_different_array([1, 2, 2, 2, 4, 3, 4], [2]))

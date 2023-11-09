@@ -67,7 +67,7 @@ def morse_code(morse_code_str:  str) -> str:
 
         Separators:
         "One space" = "New letter"
-        "Three spaces" = "New word"    
+        "Three spaces" = "New word"
     """
     morse_simbol_decode = get_morse_simbol_decode()
 
