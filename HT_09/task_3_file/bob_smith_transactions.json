@@ -1,0 +1,32 @@
+{
+  "balance_before_transaction": "345",
+  "operation": "add money",
+  "status": "success",
+  "transaction_amount": "14650",
+  "transaction_id": "20231112181744",
+  "username": "Bob Smith"
+}
+{
+  "balance_before_transaction": "14995",
+  "operation": "withdraw money",
+  "status": "success",
+  "transaction_amount": "100",
+  "transaction_id": "20231112181749",
+  "username": "Bob Smith"
+}
+{
+  "balance_before_transaction": "14895",
+  "operation": "withdraw money",
+  "status": "success",
+  "transaction_amount": "250",
+  "transaction_id": "20231112181754",
+  "username": "Bob Smith"
+}
+{
+  "balance_before_transaction": "14645",
+  "operation": "withdraw money",
+  "status": "failed",
+  "transaction_amount": "55654",
+  "transaction_id": "20231112181802",
+  "username": "Bob Smith"
+}

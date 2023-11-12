@@ -1,0 +1,40 @@
+{
+  "balance_before_transaction": "3215434",
+  "operation": "withdraw money",
+  "status": "success",
+  "transaction_amount": "55322",
+  "transaction_id": "20231112181925",
+  "username": "David Wilson"
+}
+{
+  "balance_before_transaction": "3160112",
+  "operation": "withdraw money",
+  "status": "success",
+  "transaction_amount": "50000",
+  "transaction_id": "20231112181952",
+  "username": "David Wilson"
+}
+{
+  "balance_before_transaction": "3110112",
+  "operation": "withdraw money",
+  "status": "success",
+  "transaction_amount": "80000",
+  "transaction_id": "20231112182000",
+  "username": "David Wilson"
+}
+{
+  "balance_before_transaction": "3030112",
+  "operation": "withdraw money",
+  "status": "success",
+  "transaction_amount": "98545",
+  "transaction_id": "20231112182033",
+  "username": "David Wilson"
+}
+{
+  "balance_before_transaction": "2931567",
+  "operation": "add money",
+  "status": "failed",
+  "transaction_amount": "-4323",
+  "transaction_id": "20231112182044",
+  "username": "David Wilson"
+}

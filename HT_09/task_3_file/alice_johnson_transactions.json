@@ -1,0 +1,40 @@
+{
+  "balance_before_transaction": "142423",
+  "operation": "add money",
+  "status": "success",
+  "transaction_amount": "2000",
+  "transaction_id": "20231112181244",
+  "username": "Alice Johnson"
+}
+{
+  "balance_before_transaction": "144423",
+  "operation": "withdraw money",
+  "status": "success",
+  "transaction_amount": "5500",
+  "transaction_id": "20231112181253",
+  "username": "Alice Johnson"
+}
+{
+  "balance_before_transaction": "138923",
+  "operation": "withdraw money",
+  "status": "success",
+  "transaction_amount": "38000",
+  "transaction_id": "20231112181301",
+  "username": "Alice Johnson"
+}
+{
+  "balance_before_transaction": "100923",
+  "operation": "withdraw money",
+  "status": "success",
+  "transaction_amount": "923",
+  "transaction_id": "20231112181309",
+  "username": "Alice Johnson"
+}
+{
+  "balance_before_transaction": "100000",
+  "operation": "withdraw money",
+  "status": "failed",
+  "transaction_amount": "550100",
+  "transaction_id": "20231112181447",
+  "username": "Alice Johnson"
+}

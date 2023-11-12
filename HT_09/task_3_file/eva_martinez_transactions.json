@@ -1,0 +1,40 @@
+{
+  "balance_before_transaction": "111442",
+  "operation": "add money",
+  "status": "success",
+  "transaction_amount": "50000",
+  "transaction_id": "20231112180917",
+  "username": "Eva Martinez"
+}
+{
+  "balance_before_transaction": "161442",
+  "operation": "withdraw money",
+  "status": "success",
+  "transaction_amount": "50000",
+  "transaction_id": "20231112180926",
+  "username": "Eva Martinez"
+}
+{
+  "balance_before_transaction": "111442",
+  "operation": "withdraw money",
+  "status": "success",
+  "transaction_amount": "50000",
+  "transaction_id": "20231112180932",
+  "username": "Eva Martinez"
+}
+{
+  "balance_before_transaction": "61442",
+  "operation": "add money",
+  "status": "failed",
+  "transaction_amount": "-5333",
+  "transaction_id": "20231112182200",
+  "username": "Eva Martinez"
+}
+{
+  "balance_before_transaction": "61442",
+  "operation": "withdraw money",
+  "status": "failed",
+  "transaction_amount": "1500000",
+  "transaction_id": "20231112182210",
+  "username": "Eva Martinez"
+}
