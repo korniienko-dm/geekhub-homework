@@ -1,4 +1,3 @@
-# pylint: disable=missing-function-docstring
 """
 Банкомат 2.0
     - усі дані зберігаються тільки в sqlite3 базі даних. Більше ніяких файлів.
@@ -262,13 +261,13 @@ def validate_username_conditions(username: str) -> tuple:
     rule_pattern_01 = len(username) >= 3
     rule_pattern_02 = len(username) <= 50
     rule_pattern_03 = all((i.isalpha() or i.isnumeric()) and i.isascii() for i in username)
-    
+
     username_verification_steps['Username must contain at least 3 characters'] = rule_pattern_01
     username_verification_steps['Username must not exceed 50 characters'] = rule_pattern_02
     username_verification_steps['Username contains only latin letter or number'] = rule_pattern_03
 
     validation_result = all(username_verification_steps[step] for step in username_verification_steps)
-    
+
     error_report = list()
     for key in username_verification_steps:
         if username_verification_steps[key] is False:
@@ -392,7 +391,7 @@ def withdraw_money(username: str) -> str:
         if withdraw_amount > users_current_balance:
             raise ValueError(
                 "There are not enough funds on the balance for this operation!")
-        elif (withdraw_amount < users_current_balance) and (withdraw_amount > get_total_balance_atm()):
+        elif (withdraw_amount < users_current_balance) and (withdraw_amount > total_balance_atm()):
             raise ValueError(
                 "There are not enough funds in the ATM for this operation!")
         
@@ -451,7 +450,9 @@ def get_first_screen_menu() -> int:
 
 def display_banknote_counts():
     banknote_counts = check_banknote_denominations_quantity()
-    print("\n[*** Denominations quantity for the banknotes ***]\n")
+    total_balance_atm = f"Total ATM balance: {get_total_balance_atm()} USD"
+    print("\n[*** Denominations quantity for the banknotes ***]")
+    print(f"[{total_balance_atm.center(48)}]\n")
     for denomination, count in banknote_counts.items():
         print(f"[ {str(denomination).rjust(4)} ] dollar banknote in quantity of [ {count} ] items.")
 
@@ -484,9 +485,9 @@ def change_denomination_quantity():
         return
 
     try:
-        new_quantity_value = int(input(f"Enter the new value for the quantity of banknotes with a denomination of: {service_banknot_type[number_banknote]} USD: "))
-        if new_quantity_value <= 0:
-            print("Error: Enter a positive number other than zero")
+        new_quantity_value = int(input(f"Enter the new value for the quantity of banknotes with a denomination of: {service_banknot_type[number_banknote]} USD:\n"))
+        if new_quantity_value < 0:
+            print("Error: Enter a positive number or zero")
         else:
             change_denominations_quantity(banknote_denomination=service_banknot_type[number_banknote], new_quantity=new_quantity_value)
             print("\n[*** Value for the quantity of banknotes successfully changed ***]")
@@ -506,7 +507,7 @@ def inkasator_menu():
                       "\nPlease enter an action:\n",
                       "[1] -> Display the denominations quantity for the banknotes\n",
                       "[2] -> Change the denominations quantity\n",
-                      "[3] -> Exit\n",]
+                      "[3] -> Exit",]
         print("".join(header_msg))
 
         incasator_choice = input()
