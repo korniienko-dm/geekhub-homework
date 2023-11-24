@@ -718,7 +718,7 @@ class Atm:
         - winning_percentage (int): An integer representing the winning percentage,
         where 1 means 1% chance of success.
         """
-        return randint(1, chance_win) == 1
+        return randint(1, 100) <= chance_win
     
     
     def bonus_program(self, username: str):
