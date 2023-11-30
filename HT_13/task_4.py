@@ -9,7 +9,7 @@ class AlternativeList:
     An alternative list implementation where indexing starts from 1 instead of 0.
     """
     def __init__(self, *args):
-        self._data = list(args)
+        self._data = [None] + list(args)
 
     def __getitem__(self, index):
         """
@@ -17,9 +17,7 @@ class AlternativeList:
         """
         if index == 0:
             raise IndexError("Index starts from 1, not 0")
-        elif index < 0:
-            index = len(self._data) + index + 1
-        return self._data[index - 1]
+        return self._data[index]
 
     def __setitem__(self, index, value):
         """
@@ -27,7 +25,7 @@ class AlternativeList:
         """
         if index == 0:
             raise IndexError("Index starts from 1, not 0")
-        self._data[index - 1] = value
+        self._data[index] = value
 
     def __delitem__(self, index):
         """
@@ -35,19 +33,19 @@ class AlternativeList:
         """
         if index == 0:
             raise IndexError("Index starts from 1, not 0")
-        del self._data[index - 1]
+        del self._data[index]
 
     def __len__(self):
         """
         Returns the number of elements in the AlternativeList.
         """
-        return len(self._data)
+        return len(self._data) - 1
 
     def __repr__(self):
         """
         Returns a string representation of the AlternativeList.
         """
-        return repr(self._data)
+        return repr(self._data[1:])
 
 
 my_new_list = AlternativeList(10, 20, 30, 40, 50)
@@ -58,7 +56,7 @@ my_new_list[2] = 25
 print(my_new_list)
 print(len(my_new_list))
 
-del my_new_list[4]
+del my_new_list[-2]
 print(my_new_list)
 
 print(len(my_new_list))
