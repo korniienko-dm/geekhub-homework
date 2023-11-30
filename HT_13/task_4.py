@@ -17,6 +17,8 @@ class AlternativeList:
         """
         if index == 0:
             raise IndexError("Index starts from 1, not 0")
+        elif index < 0:
+            index = len(self._data) + index + 1
         return self._data[index - 1]
 
     def __setitem__(self, index, value):
@@ -54,8 +56,10 @@ print(my_new_list[3])
 
 my_new_list[2] = 25
 print(my_new_list)
+print(len(my_new_list))
 
 del my_new_list[4]
 print(my_new_list)
 
 print(len(my_new_list))
+print(my_new_list[-1])
