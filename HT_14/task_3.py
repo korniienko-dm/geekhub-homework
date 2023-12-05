@@ -77,9 +77,9 @@ class ParsQuotes:
                 author = quote.select_one('span .author').text
                 about_author_url = quote.select_one('.quote span a')['href']
 
-                tegs = quote.select('.tag')
+                tags = quote.select('.tag')
                 tegs_list = list()
-                for i in tegs:
+                for i in tags:
                     tegs_list.append(i.text)
                 tegs_quote = ", ".join(tegs_list)
 
