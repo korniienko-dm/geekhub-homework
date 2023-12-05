@@ -2,7 +2,6 @@
 1. Додайте до банкомату меню отримання поточного курсу валют за допомогою
 requests (можна використати відкрите API ПриватБанку)
 """
-
 import sqlite3
 from pathlib import Path
 from random import randint
@@ -18,9 +17,6 @@ class ManageExchangeRate:
     Managing exchange rates using an API.
 
     Methods:
-    - check_server()
-        Checks the status of the server.
-
     - get_json_from_api()
         Retrieves JSON data from the API.
 
@@ -34,24 +30,8 @@ class ManageExchangeRate:
         """
         self.api_url = api_url
 
-
     @property
-    def check_server(self) -> tuple:
-        """ 
-        Checks the status of the server.
-        """
-        try:
-            responce = requests.get(self.api_url)
-        except Exception as text_error:
-            return f"Error:\n {text_error}"
-        else:
-            if responce.status_code == 200:
-                return (True, responce.status_code)
-            return (False, responce.status_code)
-
-
-    @property
-    def get_json_from_api(self) -> tuple:
+    def get_json_from_api(self):
         """
         Retrieves JSON data from the API.
         """
@@ -59,20 +39,19 @@ class ManageExchangeRate:
         try:
             json_data = response.json()
         except Exception as text_error:
-            return (False, f"Response is not a valid JSON: {text_error}")
+            return False, f"Response is not a valid JSON: {text_error}"
         else:
-            return (True, json_data)
-
+            return True, json_data, response.status_code
 
     @property
     def display_exchange_data(self) -> str:
         """
         Displays exchange rate data.
         """
-        status_server = self.check_server
+        status_server = self.get_json_from_api[2]
         response_json = self.get_json_from_api
 
-        if (status_server[0] is False) or (response_json[0] is False):
+        if (status_server is False) or (response_json[0] is False):
             return "An error occurred during the request. Please inform administrator."
 
         collect_exchange_data = list()
@@ -172,7 +151,6 @@ class ControllerDb:
             """, (new_value, denominations))
         conn.commit()
 
-
     def get_user_id(self, username: str) -> int:
         """
         Retrieve the user ID associated with the given username from the database.
@@ -181,7 +159,6 @@ class ControllerDb:
             cursor = conn.cursor()
             cursor.execute("SELECT user_id FROM users WHERE username = ?", (username,))
             return cursor.fetchone()[0]
-
 
     def get_user_balance(self, username: str) -> int:
         """
@@ -192,7 +169,6 @@ class ControllerDb:
             cursor = conn.cursor()
             cursor.execute("SELECT balance FROM users_balance WHERE user_id = ?", (user_id,))
             return cursor.fetchone()[0]
-    
 
     def get_total_balance_atm(self) -> int:
         """
@@ -207,7 +183,6 @@ class ControllerDb:
             total_balance = cursor.fetchone()[0]
             return total_balance
 
-
     def create_transaction(self, username: str, operation: str, status: str, transaction_amount: int):
         """
         Create a transaction record in the database, capturing details such as the
@@ -221,7 +196,6 @@ class ControllerDb:
                         (user_id, operation, status, transaction_amount))
         conn.commit()
 
-
     def initialization_user_balance(self, username: str):
         """
         Initialize the user balance by creating a record in the database
@@ -234,7 +208,6 @@ class ControllerDb:
                         (user_id, 0))
         conn.commit()
 
-
     def create_user(self, username: str, password: str, user_status='user'):
         """
         Create a new user in the database with the specified username,
@@ -246,7 +219,6 @@ class ControllerDb:
                         (username, password, user_status))
         self.initialization_user_balance(username)
         conn.commit()
-
 
     def get_user_status(self, username: str) -> str:
         """
@@ -263,7 +235,6 @@ class ControllerDb:
             """, (user_id,))
         return cursor.fetchone()[0]
 
-
     def add_money_to_user_balace(self, amount: int, username: str):
         """
         Increase the balance of the specified user in the database by the given amount.
@@ -277,7 +248,6 @@ class ControllerDb:
                 WHERE user_id = ?
             """, (amount, user_id))
         conn.commit()
-
 
     def withdraw_money_from_user_balance(self, amount: int, username: str):
         """
@@ -293,7 +263,6 @@ class ControllerDb:
                 WHERE user_id = ?
             """, (amount, user_id))
         conn.commit()
-
 
     def update_banknote_count_when_withdrawing(self, amount_withdraw: int, banknote_denomination: int):
         """
@@ -317,7 +286,6 @@ class ControllerDb:
                 """, (amount_withdraw, banknote_denomination))
             conn.commit()
 
-
     def get_banknote_denomination_count(self, banknote_nominal: int) -> int:
         """  
         Retrieve the quantity of a specific banknote denomination from the database.
@@ -331,7 +299,6 @@ class ControllerDb:
             """, (banknote_nominal,))
 
         return int(cursor.fetchone()[0])
-
 
     def check_user_exists(self, username: str) -> bool:
         """
@@ -347,7 +314,6 @@ class ControllerDb:
 
             return bool(cursor.fetchone())
 
-
     def get_min_denominations(self) -> int:
         """
         Retrieve the minimum banknote denomination value from the database.
@@ -359,7 +325,6 @@ class ControllerDb:
                 FROM banknote_denominations_count
             """)
             return cursor.fetchone()[0]
-
 
     def check_banknote_denominations_quantity(self) -> dict:
         """
@@ -374,7 +339,6 @@ class ControllerDb:
             """)
             return dict(cursor.fetchall())
 
-
     def change_denominations_quantity(self, banknote_denomination: int, new_quantity: int):
         """
         Change the quantity of a specific banknote denomination in
@@ -388,7 +352,6 @@ class ControllerDb:
                 WHERE denominations = ?
             """, (new_quantity, banknote_denomination))
         conn.commit()
-
 
     def check_user_password(self, username: str, password: str) -> bool:
         """
@@ -505,7 +468,6 @@ class Atm:
         self.atm_db = db
         self.exchange_api = exchange_api
 
-
     @staticmethod
     def validate_username_conditions(username: str) -> tuple:
         """
@@ -529,8 +491,7 @@ class Atm:
         for key in username_verification_steps:
             if username_verification_steps[key] is False:
                 error_report.append(key)
-        return (validation_result, error_report)
-
+        return validation_result, error_report
 
     @staticmethod
     def validate_password_conditions(password: str) -> tuple:
@@ -559,8 +520,7 @@ class Atm:
         for key in pass_verification_steps:
             if pass_verification_steps[key] is False:
                 error_report.append(key)
-        return (validation_result, error_report)
-
+        return validation_result, error_report
 
     @staticmethod
     def get_result_user_authentication() -> dict:
@@ -583,7 +543,6 @@ class Atm:
                             'username': entered_username}
         return verification_result
 
-
     @staticmethod
     def service_put_money_on_balance(username: str, operation: str, amount: int):
         """
@@ -596,9 +555,7 @@ class Atm:
         """
         atm_db.add_money_to_user_balace(amount=amount, username=username)
         atm_db.create_transaction(username=username, operation=operation, status="success", transaction_amount=amount)
-        
-    
-    
+
     def put_money_on_balance(self, username: str, operation="add money") -> str:
         """
         Add money to the balance for the specified username, with the operation
@@ -623,7 +580,6 @@ class Atm:
         else:
             return self.process_successful_put_money(replenishment_amount=replenishment_amount, min_denomination=min_denomination, username=username)
 
-
     @staticmethod
     def process_successful_put_money(replenishment_amount, min_denomination, username) -> str:
         """
@@ -643,7 +599,6 @@ class Atm:
             atm_db.create_transaction(username=username, operation=operation, status=operation_status, transaction_amount=replenishment_amount)
             return f"\n[ *** Balance successfully increased by {replenishment_amount} USD; your change is {change} USD. ***]"
 
-
     @staticmethod
     def get_quantity_all_banknotes() -> list:
         """
@@ -661,7 +616,6 @@ class Atm:
         quantity_all_banknotes = [item for sublist in all_banknote for item in sublist]
         return quantity_all_banknotes
 
-
     @ staticmethod
     def get_banknote_count_when_withdraw(banknot_withdraw: list) -> dict:
         """
@@ -678,7 +632,6 @@ class Atm:
         banknotes_count[10] = banknot_withdraw.count(10)
         return banknotes_count
 
-
     @staticmethod
     def get_inf_count_banknotes_for_withdrawal(banknote_count: dict) -> str:
         """
@@ -689,7 +642,6 @@ class Atm:
             if count != 0:
                 response.append(f"{str(denomination).ljust(4)} x {count}\n")
         return "".join(response)
-
 
     @staticmethod
     def starting_withdrawing_banknotes(withdrawal_count_banknote: dict) -> bool:
@@ -705,7 +657,6 @@ class Atm:
             return False
         else:
             return True
-
 
     def calculate_banknote_for_withdraw(self, withdrawal_quantity: str) -> list:
         """
@@ -739,7 +690,6 @@ class Atm:
 
         return(withdraw_banknotes)
 
-    
     @staticmethod
     def run_process_withdraw_banknote(amount: int) -> str:
         """
@@ -754,7 +704,6 @@ class Atm:
         else:
             output_detail = "\n[*** Warning!: Error withdrawal banknote count! Contact your manger!\n ***]"
         return output_detail
-
 
     def withdraw_money(self, username: str, operation="withdraw money") -> str:
         """
@@ -788,7 +737,6 @@ class Atm:
         else:
             return self.process_successful_withdrawal(withdraw_amount=withdraw_amount, min_denomination=min_denomination, username=username)
 
-
     @staticmethod
     def process_successful_withdrawal(withdraw_amount, min_denomination, username) -> str:
         """
@@ -812,7 +760,6 @@ class Atm:
 
             return f"\n[ *** Withdraw {withdraw_amount} USD, has been successfully, your change: {change} USD ***]\n{process_withdraw_banknotes}"
 
-
     @staticmethod
     def get_user_menu() -> int:
         """
@@ -828,7 +775,6 @@ class Atm:
             print("[0] -> Exit")
             return input()
 
-
     @staticmethod
     def get_first_screen_menu() -> int:
         """
@@ -841,7 +787,6 @@ class Atm:
         print("[0] -> Exit")
         return input()
 
-
     @staticmethod
     def display_banknote_counts():
         """
@@ -853,7 +798,6 @@ class Atm:
         print(f"[{total_balance_atm.center(48)}]\n")
         for denomination, count in banknote_counts.items():
             print(f"[ {str(denomination).rjust(4)} ] dollar banknote in quantity of [ {count} ] items.")
-
 
     @staticmethod
     def change_denomination_quantity():
@@ -893,7 +837,6 @@ class Atm:
         except ValueError as text_error:
             print(f"Error: Enter an integer. {text_error}")
 
-
     def inkasator_menu(self):
         """
         Incasator service menu providing options to display banknote
@@ -922,7 +865,6 @@ class Atm:
             elif incasator_choice == '3':
                 return "\n[*** Incasator has successfully logged out ***]\n"
 
-
     def get_username_for_registration(self) -> str:
         """
         Prompt the user to create a username for registration, enforcing rules
@@ -948,7 +890,6 @@ class Atm:
                 else:
                     return username
 
-
     def get_password_for_registration(self) -> str:
         """
         Prompt the user to create a password for registration, following rules
@@ -972,7 +913,6 @@ class Atm:
             else:
                 return password
 
-
     @staticmethod
     def generator_winning(chance_win: int) -> int:
         """
@@ -982,8 +922,7 @@ class Atm:
         where 1 means 1% chance of success.
         """
         return randint(1, 100) <= chance_win
-    
-    
+
     def bonus_program(self, username: str) -> bool:
         """
         Implement a bonus program for the user.
@@ -996,7 +935,6 @@ class Atm:
             return True
         else:
             return False
-
 
     def registration_new_user(self) -> str:
         """
@@ -1024,14 +962,12 @@ class Atm:
                             "Please go to 'home screen' and login, using your username and password."]
             return "".join(successfully_msg)
 
-
     @staticmethod
     def hello_screen(username: str) -> str:
         """
         Generate a welcome message for the user with their username on the hello screen.
         """
         return f"\n[*** Hello {username}! Welcome to our ATM! ***]"
-
 
     @staticmethod
     def home_screen() -> str:
@@ -1053,13 +989,11 @@ class Atm:
                                 "[------------------------------]\n"]
         return "".join(сurrent_exchange_banner)
 
-
     def show_exchange_rates(self):
         """ 
         Docstring 
         """
         return self.exchange_api.display_exchange_data
-
 
     def start(self):
         """

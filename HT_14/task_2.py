@@ -7,7 +7,6 @@
   день у вказаному інтервалі)
 - не забудьте перевірку на валідність введених даних
 """
-
 from datetime import datetime, timedelta
 import json
 import requests
@@ -24,7 +23,6 @@ class FindExchangeRatesByDate:
     Methods:
     - __init__(self, api_domain, api_url): Constructor method to initialize the class.
     - get_calendar_date_from_user(user_data: str) -> tuple: Static method to parse user input into a valid date.
-    - check_server(self) -> tuple: Method to check the availability of the API server.
     - display_menu(): Static method to display the main menu.
     - display_menu_currency(): Static method to display the currency selection menu.
     - display_date_title(): Static method to display the title for entering a single date.
@@ -40,14 +38,12 @@ class FindExchangeRatesByDate:
     - handle_menu_choice(self, choice): Method to handle user menu choices.
     - run(self): Method to run the main program loop.
     """
-    
     def __init__(self, api_domain, api_url):
         """
         Constructor method to initialize the FindExchangeRatesByDate class.
         """    
         self.api_domain = api_domain
         self.api_url = api_url
-
 
     @staticmethod
     def get_calendar_date_from_user(user_data: str):
@@ -57,24 +53,10 @@ class FindExchangeRatesByDate:
         try:
             date_obj = datetime.strptime(user_data, '%d/%m/%Y').date()
         except Exception as text_error:
-            return (False, text_error)
+            return False, text_error
         else:
             format_date = date_obj.strftime("%d.%m.%Y")
-            return (True, format_date)
-
-
-    def check_server(self) -> tuple:
-        """
-        Method to check the availability of the API server.
-        """
-        try:
-            response = requests.get(self.api_domain)
-            response.raise_for_status()
-        except requests.exceptions.RequestException as request_error:
-            return (False, f"Error during the request: {request_error}")
-        else:
-            return (True, response.status_code)
-
+            return True, format_date
 
     @staticmethod
     def display_menu():
@@ -92,7 +74,6 @@ class FindExchangeRatesByDate:
              '[0] Exit program']
 
         return "".join(menu_elements)
-
 
     @staticmethod
     def display_menu_currency():
@@ -114,7 +95,6 @@ class FindExchangeRatesByDate:
              '[0] Exit program']
         return "".join(menu_elements)
 
-
     @staticmethod
     def display_date_title():
         """
@@ -124,7 +104,6 @@ class FindExchangeRatesByDate:
                           '| Please enter the date:             |\n',
                           '--------------------------------------',]
         return "".join(title_elements)
-
 
     @staticmethod
     def display_first_date_title():
@@ -136,7 +115,6 @@ class FindExchangeRatesByDate:
                           '--------------------------------------',]
         return "".join(title_elements)
 
-
     @staticmethod
     def display_second_date_title():
         """
@@ -146,7 +124,6 @@ class FindExchangeRatesByDate:
                           '| Please enter the srcond date:     |\n',
                           '--------------------------------------',]
         return "".join(title_elements)
-
 
     @staticmethod
     def get_user_choice_currency_list(user_choice: str):
@@ -163,7 +140,6 @@ class FindExchangeRatesByDate:
                          '8': 'CAD'}
         return currency_code.get(user_choice, False)
 
-
     def get_user_currency(self):
         """
         Method to get user input for selecting a currency.
@@ -175,7 +151,6 @@ class FindExchangeRatesByDate:
             return user_currency
         return user_currency
 
-
     def get_user_date(self):
         """
         Method to get user input for a single date.
@@ -183,7 +158,6 @@ class FindExchangeRatesByDate:
         user_data = input('Please enter a date (dd/mm/yyyy): ')
         check_date = self.get_calendar_date_from_user(user_data=user_data)
         return check_date
-
 
     @staticmethod
     def create_date_range(user_start_date, user_end_date):
@@ -194,13 +168,12 @@ class FindExchangeRatesByDate:
         user_end_date = datetime.strptime(user_end_date, "%d.%m.%Y")
 
         if user_start_date > user_end_date:
-            return (False, "Error: The second date must be no less than the first.")
+            return False, "Error: The second date must be no less than the first."
 
         date_range = [user_start_date + timedelta(days=x) for x in range((user_end_date - user_start_date).days + 1)]
         date_strings = [date.strftime("%d.%m.%Y") for date in date_range]
 
-        return (True, date_strings)
-
+        return True, date_strings
 
     def get_data_from_json(self, calendar_date: str) -> tuple:
         """
@@ -213,18 +186,17 @@ class FindExchangeRatesByDate:
 
             content_type = headers.get('Content-Type', '').lower()
             if 'application/json' not in content_type:
-                return (False, "'Content-Type' is not 'application/json'")
+                return False, "'Content-Type' is not 'application/json'"
 
             data = response.json()
         except requests.exceptions.HTTPError as http_error:
-            return (False, f"HTTP error: {http_error}")
+            return False, f"HTTP error: {http_error}"
         except json.JSONDecodeError as json_error:
-            return (False, f"Response is not a valid JSON: {json_error}")
+            return False, f"Response is not a valid JSON: {json_error}"
         except Exception as error:
-            return (False, f"An unexpected error occurred: {error}")
+            return False, f"An unexpected error occurred: {error}"
         else:
-            return (True, data)
-
+            return True, data
 
     def get_pars_data(self, user_currency: str, user_date):
         """
@@ -259,7 +231,6 @@ class FindExchangeRatesByDate:
                                                   'purchaseRate': item.get('purchaseRate')})
         return collection_exchange_rates
 
-
     def get_display_pars_result(self, user_currency: str, user_date):
         """
         Method to format and display parsed results.
@@ -288,7 +259,6 @@ class FindExchangeRatesByDate:
 
             display_resault.append(f"{date}; {currency_pair}; {buy}; {sell}\n")
         return "".join(display_resault)
-    
 
     def handle_menu_choice(self, choice):
         """
@@ -351,7 +321,6 @@ class FindExchangeRatesByDate:
         else:
             print("Invalid input. Please select an action from the list.")
         return True
-
 
     def run(self):
         """

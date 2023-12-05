@@ -20,26 +20,24 @@ class ParsQuotes:
     - csv_file_path (str): The file path to save the CSV file.
 
     Methods:
-    - get_author_information(base_url: str, author_url: str) -> List[Dict[str, str]]:
+    - get_author_information(base_url: str, author_url: str):
         Get information about the author from the author's URL.
 
-    - scrape_page(base_url: str, work_url: str) -> List[Dict[str, str]] or None:
+    - scrape_page(base_url: str, work_url: str):
         Scrape quotes and related information from a given page URL.
 
-    - get_all_url(base_url: str) -> List[str]:
+    - get_all_url(base_url: str):
         Get a list of all page URLs by navigating through the paginated structure.
 
-    - save_to_csv(data: List[Dict[str, str]], csv_filename: str) -> None:
+    - save_to_csv(data: List[Dict[str, str]], csv_filename: str):
         Save the parsed data to a CSV file.
 
-    - main() -> None:
+    - main():
         The main method that orchestrates the scraping, parsing, and saving to CSV.
     """
-
     def __init__(self, base_url, csv_file_path):
         self.base_url = base_url
         self.csv_file_path = csv_file_path
-
 
     @staticmethod
     def get_author_information(base_url: str, author_url: str):
@@ -47,8 +45,8 @@ class ParsQuotes:
         Get information about the author from the author's URL.
         """              
         info_about_author = list()
-        responce = requests.get(base_url + author_url)
-        soup = BeautifulSoup(responce.text, 'lxml')
+        response = requests.get(base_url + author_url)
+        soup = BeautifulSoup(response.text, 'lxml')
         author_inf_conainner = soup.select_one('.author-details')
 
         author_born_date = author_inf_conainner.select_one('.author-born-date').text
@@ -60,7 +58,6 @@ class ParsQuotes:
                                 'author_born_location': author_born_location,
                                 'author_description': author_description})
         return info_about_author
-
 
     def scrape_page(self, base_url: str, work_url: str):
         """
@@ -101,7 +98,6 @@ class ParsQuotes:
             print(f"Error: Unable to fetch data from {work_url}")
             return None
 
-
     @staticmethod
     def get_all_url(base_url: str):
         """
@@ -123,7 +119,6 @@ class ParsQuotes:
 
         return page_url
 
-
     @staticmethod
     def save_to_csv(data, csv_filename):
         """
@@ -143,7 +138,6 @@ class ParsQuotes:
 
             for ellement in data:
                 writer.writerow(ellement)
-
 
     def main(self):
         """
