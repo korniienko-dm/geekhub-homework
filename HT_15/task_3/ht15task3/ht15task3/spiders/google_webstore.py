@@ -1,3 +1,7 @@
+"""
+Run spider command:
+scrapy crawl google_webstore -o google_extension_info.csv
+"""
 import scrapy
 from bs4 import BeautifulSoup
 
