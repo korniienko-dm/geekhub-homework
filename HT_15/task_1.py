@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 import json
 from random import randint
+from json.decoder import JSONDecodeError
 import requests
 
 
@@ -176,63 +177,3 @@ if __name__ == '__main__':
     SAVE_PATH = Path(__file__).resolve().parent / 'task_1_files'
     pars_market = ParsMarketplace(category_id='1231470962', path_to_save_file=SAVE_PATH)
     print(pars_market.main())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# category_id = '1231470962'
-# start_index = 1
-# end_index = 48
-# product_info = []
-# delay_seconds = 1
-
-# while True:
-#     url = f'https://www.sears.com/api/sal/v3/products/search?startIndex={start_index}&endIndex={end_index}&searchType=category&catalogId=12605&store=Sears&storeId=10153&disableBundleInd=true&sortBy=ORIGINAL_SORT_ORDER&catGroupPath=TVs%20%26%20Electronics%7CTelevisions&catGroupId={category_id}/'
-#     print(f"Delay before request is: {delay_seconds} seconds. Wait...")
-#     time.sleep(delay_seconds)
-#     print(f"Start index: {start_index}; End index: {end_index}")
-    
-#     try:
-#         response = requests.get(url, cookies=cookies, headers=headers)
-#         response.raise_for_status()
-#         items = response.json().get('items', [])
-        
-#         for item in items:
-#             product_info.append({
-#                 'id': item.get('id'),
-#                 'brand_name': item.get('brandName'),
-#                 'name': item.get('name'),
-#                 'part_num': item.get('partNum'),
-#                 'upc_num': item.get('upc'),
-#                 'category': item.get('category'),
-#                 'price': item.get('price', {}).get('regularPrice'),
-#                 'discount_percentage': item.get('price', {}).get('savingsPercent'),
-#                 'final_price': item.get('price', {}).get('finalPrice'),
-#             })
-#     except requests.exceptions.RequestException as e:
-#         print(f"Error in request: {e}")
-#         break
-#     except JSONDecodeError as e:
-#         print(f"Error decoding JSON: {e}")
-#         break
-#     except Exception as e:
-#         print(f"Error: {e}")
-#         break
-#     else:
-#         start_index += len(items)
-#         end_index += len(items)
-#         break # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

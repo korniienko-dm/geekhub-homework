@@ -8,6 +8,7 @@ import time
 from pathlib import Path
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
+from json.decoder import JSONDecodeError
 import requests
 
 
