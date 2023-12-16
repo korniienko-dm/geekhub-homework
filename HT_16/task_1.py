@@ -113,14 +113,17 @@ class OrderRobots:
 
     def clear_save_dir(self):    
         """Clear save directory"""
-        try:
+        # Check if the save directory exists
+        if not self.save_dir.is_dir():
+            # If not, create it
+            self.save_dir.mkdir(parents=True)
+        else:
+            # If it exists, remove its contents
             for item in self.save_dir.iterdir():
                 if item.is_file() or item.is_symlink():
                     item.unlink()
                 elif item.is_dir():
                     item.rmdir()
-        except Exception as e:
-            return f"An error occurred: {e}"
 
     @staticmethod
     def wait_css_selector(driver, css_selector: str):
