@@ -91,3 +91,7 @@ ___
 > #### HT_15 : 05-12-2023  
 > ![HT_15 img](https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_15.png)
 
+___
+
+> #### HT_16 : 12-12-2023  
+> ![HT_16 img](https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_16.png)
