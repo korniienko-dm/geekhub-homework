@@ -30,6 +30,7 @@ HT #16
 """
 import csv
 import io
+import shutil
 from pathlib import Path
 import requests
 from PIL import Image
@@ -118,12 +119,9 @@ class OrderRobots:
             # If not, create it
             self.save_dir.mkdir(parents=True)
         else:
-            # If it exists, remove its contents
-            for item in self.save_dir.iterdir():
-                if item.is_file() or item.is_symlink():
-                    item.unlink()
-                elif item.is_dir():
-                    item.rmdir()
+            # Delete directory and create new one
+            shutil.rmtree(self.save_dir)
+            self.save_dir.mkdir(parents=True)
 
     @staticmethod
     def wait_css_selector(driver, css_selector: str):
