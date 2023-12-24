@@ -1,0 +1,26 @@
+ul {
+    list-style-type: circle;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+li a {
+    color: green;
+    font-family: Arial;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 5px;
+
+}
+
+li a:hover {
+    border-bottom: 2px dashed #7e7b7b;
+    background-color: #ebe3e3;
+    border-radius: 10px;
+}
+
+body {
+    background: white url("images/background.png");
+}
