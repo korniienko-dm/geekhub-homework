@@ -1,0 +1,44 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block content %}
+    <section class="home_page_info">
+        <h1>Welcome to Sears Products Viewer</h1>
+        <p>
+            <strong>Sears Products Viewer</strong> is your gateway to a vast selection of Sears products, providing you with detailed insights
+            and information about the items you're interested in. Explore the functionality of our platform to make your shopping
+            experience more informed and enjoyable.
+        </p>
+        <div class="head_img">
+            <img src="{% static 'main/img/004.jpg' %}" alt="">
+        </div>
+        
+        <p>
+            Discover the latest trends, compare products, and find exactly what you need. The intuitive interface allows you
+            to seamlessly navigate through various features to make the most out of your visit.
+        </p>
+        <ul>
+            <li>
+                In the <a href="{% url 'add_products' %}" class="section">"Add Products"</a> section, simply input the product IDs you want to explore, and watch as our platform fetches
+                the relevant details for you. 
+            </li>
+            <li>
+                The <a href="{% url 'show_products' %}" class="section">"All Products"</a> page serves as your dashboard, displaying an overview of all the
+                products you've added.
+            </li>
+            <li>
+               Click on the <span class="section">"Details" link</span> for any product to access comprehensive information, including specifications, pricing,
+               and more detail information about product. Dive into the world of Sears products with confidence, knowing that you have all the details
+               at your fingertips.
+            </li>
+        </ul>
+        <p>
+            Whether you're a seasoned shopper or just starting, Sears Products Viewer is designed to enhance your experience
+            and simplify the decision-making process!
+        </p>
+    </section>
+{% endblock %}

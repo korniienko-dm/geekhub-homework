@@ -1,0 +1,46 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Your products
+{% endblock %}
+
+{% block content %}
+    <h1>Your products</h1>
+        
+    <p class="mrg_bt_30"> 
+        The <strong>"All Products" page</strong> serves as your dashboard, displaying an overview of all the products you've added.
+    </p>
+    
+    {% if products %}
+        <table class="table">
+            <col style="width:30%">
+            <col style="width:10%">
+            <col style="width:12%">
+            <col style="width:12%"> 
+            <col style="width:12%">
+            <thead>
+            <tr>
+                <th>Product name:</th>
+                <th>Image:</th>
+                <th>Brand name:</th>
+                <th>Price:</th>
+                <th>Details Page:</th>
+            </tr>
+            </thead>
+                {% for element in products %}
+                    <tr>
+                        <td>{{ element.name }}</td>
+                        <td class="td_item"><img width="50" src="{{ element.image }}" alt="{{ element.name }}"> </td>
+                        <td class="td_item">{{ element.brand }}</td>
+                        <td class="td_item">{{ element.price }}</td>
+                        <td class="td_item"><a href="{% url 'product_details' element.id %}">Details</a></td>
+                    </tr>
+                {% endfor %}
+        </table>
+    {% else %}
+        <div class="empty_product_list">
+            <p><strong>You don't have any added products yet.</strong> </p>
+            <p>Please visit the page: <a href="{% url 'add_products' %}">"Add product"</a> and add the products to your list.</p>   
+        </div>
+    {% endif %}
+{% endblock %}

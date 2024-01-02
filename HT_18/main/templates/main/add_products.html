@@ -1,0 +1,17 @@
+{% extends 'main/layout.html' %}
+{% block title %}
+    Add new product
+{% endblock %}
+{% block content %}
+    <h1>Add new product</h1>
+    <p><strong>Input the product IDs</strong> you want to explore, and watch as our platform fetches the relevant details for you.</p>
+    <div class="form_add_products">
+        <form method="post" action="{% url 'add_products' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div>
+                <button class="form-btn" type="submit">Send form</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
