@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'main/img/favicon.ico' %}" />
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="containner clearfix">
+            <div class="aside_menu">
+                <div class="logo-wrapper">
+                    <a href="{% url 'home' %}"><img src="{% static 'main/img/01-logo.png' %}" alt="Site Logo"></a>
+                </div>
+                <div class="nav">
+                    <ul>
+                        <li>
+                            <i class="fas fa-home"></i>
+                            <a href="{% url 'home' %}">Home page</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-plus-circle"></i>
+                            <a href="{% url 'add_products' %}">Add Products</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-tasks"></i>
+                            <a href="{% url 'show_products' %}">My Products</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-shopping-cart"></i>
+                            <a href="{% url 'cart_page' %}">Cart</a>
+                            <span class="count_product">{{ request.session.product_data.cart_list|length }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    {{ product_id.name }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ product_id.name }}</h1>
+    <img class="prod_img" width="350"  src="{{ product_id.image }}" alt="{{ product_id.name }}">
+    <div class="prod_spec_sh_descr">{{ product_id.short_description|safe }}</div>
+    <div class="prod_spec_lg_descr">{{ product_id.long_description|safe }}</div>  
+    <div class="prod_spec_wrapper">
+        <ul>
+            <li><span class="prod_spec">Product name:</span> {{ product_id.name }}</li>
+            <li><span class="prod_spec">Brand:</span> {{ product_id.brand }}</li>
+            <li><span class="prod_spec">Product ID:</span> {{ product_id.product_id }}</li>
+            <li><span class="prod_spec">Price:</span> {{ product_id.price }}</li>
+            <li><span class="prod_spec">Seller:</span> {{ product_id.seller }}</li>
+        </ul>
+    </div>
+    <div class="prod_spec_wrapper_end">
+        <ul>
+            <li><span class="prod_spec">Parent category:</span> <a target="_blank" href="{{ product_id.parent_category_url}}">{{ product_id.parent_category}}</a></li>
+            <li><span class="prod_spec">Product page:</span> <a target="_blank" href="{{ product_id.seo_url}}">Go to product page</a></li>
+        </ul>    
+    </div>
+{% endblock %}
