@@ -109,3 +109,7 @@ ___
 
 > #### HT_19 : 09-01-2024  
 > ![HT_19 img](https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_19.png)
+___
+
+> #### HT_20 : 16-01-2024  
+> ![HT_20 img](https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_20.png)
