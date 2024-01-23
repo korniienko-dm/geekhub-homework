@@ -1,3 +1,10 @@
+"""
+Sears Product Scraping Module
+
+This module provides a class:
+    - SearsProductScraping, for scraping product information from Sears API.
+"""
+
 import requests
 import time
 import random

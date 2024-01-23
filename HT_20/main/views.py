@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from utils.parser import SearsProductScraping
+from .view_service.cart_manage import CartManageProduct
 from .models import Product
 from .models import Category
 from .forms import ProductForm
@@ -129,18 +130,8 @@ def parse_and_save_product(product_id):
 
 def swap_product_in_cart(request):
     """Add or remove a product from the shopping cart in the session."""
-    product_id = request.GET.get('product_id')
-    product_data = {'product_id': product_id, 'product_quantity': 1}
-    if product_id:
-        cart_list = request.session.get(
-            'product_data', {}).get('cart_list', [])
-        if product_id in [item['product_id'] for item in cart_list]:
-            cart_list = [
-                item for item in cart_list if item['product_id'] != product_id]
-        else:
-            cart_list.append(product_data)
-        product_in_cart = [elem['product_id'] for elem in cart_list]
-        request.session['product_data'] = {'cart_list': cart_list}
-        request.session['id_list'] = product_in_cart
-        request.session.modified = True
+    cart_manage = CartManageProduct(request=request)
+    cart_list = cart_manage.get_cart_list()
+    updated_cart_list = cart_manage.update_cart_list(cart_list)
+    cart_manage.update_session(updated_cart_list)
     return redirect('show_products')
