@@ -806,3 +806,18 @@ a i {
 .end_block {
     margin-bottom: 50px;
 }
+
+#messages_id {
+    position: relative;
+}
+
+#messages_id .hide_button {
+    display: inline-block;
+    color: #ffffff;
+    border-radius: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    position: absolute;
+    right: 9px;
+    top: 5px;
+}

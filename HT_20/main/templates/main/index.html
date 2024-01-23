@@ -8,8 +8,9 @@
 {% block content %}
     <section class="home_page_info">
         <h1>Welcome to Sears Products Viewer</h1>
-        <div class="messages">
+        <div class="messages" id="messages_id">
             {% if messages %}
+            <div class="hide_button" onclick="hide_message_block()"><i class="fas fa-times-circle"></i></div>
             <ul class="messages">
                 {% for message in messages %}
                 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><i class="fas fa-info-circle"></i>{{ message }}</li>
