@@ -1,0 +1,19 @@
+2024-01-24 19:51:54,651 - ERROR - Error in operation: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "/home/userdm/code/geekhub-homework/HT_20/main/views.py", line 103, in add_products
+    future.result()
+  File "/home/userdm/.pyenv/versions/3.11.0/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/userdm/.pyenv/versions/3.11.0/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/userdm/.pyenv/versions/3.11.0/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/userdm/code/geekhub-homework/HT_20/main/views.py", line 129, in parse_and_save_product
+    data = scraper.get_product_informations()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/userdm/code/geekhub-homework/HT_20/utils/parser.py", line 127, in get_product_informations
+    'seller': data['productDetail']['softhardProductdetails'][0]['defaultSeller']['soldBy'] or 'None',
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable

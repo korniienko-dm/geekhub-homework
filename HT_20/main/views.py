@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from utils.parser import SearsProductScraping
+from utils.logger import logger
 from .view_service.cart_manage import CartManageProduct
 from .models import Product
 from .models import Category
@@ -94,12 +95,16 @@ def add_products(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             product_ids = form.cleaned_data['product_ids']
-            with ThreadPoolExecutor() as executor:
-                futures = [executor.submit(
-                    parse_and_save_product, product_id) for product_id in product_ids]
-                for future in futures:
-                    future.result()
-            return redirect('show_products')
+            try:
+                with ThreadPoolExecutor() as executor:
+                    futures = [executor.submit(
+                        parse_and_save_product, product_id) for product_id in product_ids]
+                    for future in futures:
+                        future.result()
+            except Exception as error:
+                logger.error(f"Error in operation: {error}", exc_info=True)
+            finally:
+                return redirect('show_products')
     else:
         form = ProductForm()
     return render(request, 'main/add_products.html', {'form': form, 'products': products})

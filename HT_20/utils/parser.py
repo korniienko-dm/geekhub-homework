@@ -99,7 +99,6 @@ class SearsProductScraping:
 
     def get_response_from_api(self):
         """Get a response from Sears API."""
-        # self.request_delay()
         product_api_link = self.get_api_link()
         cookies = self.get_cookies()
         headers = self.get_headers()
@@ -117,16 +116,15 @@ class SearsProductScraping:
             'name': data['productDetail']['softhardProductdetails'][0]['descriptionName'] or 'None',
             'brand': data['productDetail']['softhardProductdetails'][0]['brandName'] or 'None',
             'product_id': self.product_id or 'None',
-            # 'product_id': data['productDetail']['softhardProductdetails'][0]['identity']['sSin'] or 'None',
             'image': data['productDetail']['softhardProductdetails'][0]['mainImageUrl'] or 'None',
             'price': data['productDetail']['softhardProductdetails'][0]['salePrice'] or 'None',
-            # 'price': data['productDetail']['softhardProductdetails'][0]['price']['finalPriceDisplay'] or 'None',
             'seo_url': f"{base_url}{data['productDetail']['softhardProductdetails'][0]['seoUrl']}" or 'None',
             'user_manual': data['productDetail']['softhardProductdetails'][0]['userManual'] or 'None' or 'None',
             'pre_description': data['productDetail']['softhardProductdetails'][0]['topDescription'] or 'None',
             'short_description': data['productDetail']['softhardProductdetails'][0]['shortDescription'] or 'None',
             'long_description': data['productDetail']['softhardProductdetails'][0]['longDescription'] or 'None',
             'seller': seller_data.get('soldBy', 'None') if seller_data else 'None',
+            # 'seller': data['productDetail']['softhardProductdetails'][0]['defaultSeller']['soldBy'] or 'None',
             'parent_category': data['productDetail']['softhardProductdetails'][0]['hierarchies']['specificHierarchy'][-1]['name'] or 'None',
             'parent_category_url': f"{base_url}{data['productDetail']['softhardProductdetails'][0]['hierarchies']['specificHierarchy'][-1]['seoURL'] or 'None'}",
         }
