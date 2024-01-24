@@ -112,6 +112,7 @@ class SearsProductScraping:
         """Get information about the product through the Sears API."""
         base_url = 'https://www.sears.com'
         data = self.get_response_from_api()
+        seller_data = data.get('productDetail', {}).get('softhardProductdetails', [{}])[0].get('defaultSeller')
         product_information = {
             'name': data['productDetail']['softhardProductdetails'][0]['descriptionName'] or 'None',
             'brand': data['productDetail']['softhardProductdetails'][0]['brandName'] or 'None',
@@ -125,7 +126,7 @@ class SearsProductScraping:
             'pre_description': data['productDetail']['softhardProductdetails'][0]['topDescription'] or 'None',
             'short_description': data['productDetail']['softhardProductdetails'][0]['shortDescription'] or 'None',
             'long_description': data['productDetail']['softhardProductdetails'][0]['longDescription'] or 'None',
-            'seller': data['productDetail']['softhardProductdetails'][0]['defaultSeller']['soldBy'] or 'None',
+            'seller': seller_data.get('soldBy', 'None') if seller_data else 'None',
             'parent_category': data['productDetail']['softhardProductdetails'][0]['hierarchies']['specificHierarchy'][-1]['name'] or 'None',
             'parent_category_url': f"{base_url}{data['productDetail']['softhardProductdetails'][0]['hierarchies']['specificHierarchy'][-1]['seoURL'] or 'None'}",
         }
