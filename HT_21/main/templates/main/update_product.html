@@ -1,0 +1,40 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Edit Product: {{ object.name }}
+{% endblock %}
+
+{% block content %}
+    <h1>Edit Product</h2>
+    <div class="update_page_img">
+        <p class="update_page_img_label">
+            Product Image: 
+        </p>
+        <div class="update_page_img_wrapper">
+            <img class="prod_img" src="{{ object.image }}" alt="object.name" width="350px">
+        </div>
+        <div class="update_page_img_a_wrapper">
+            <span class="update_page_img_a_span">To replace the image, edit the parameter: <strong>"Image URL"...</strong></span>
+            <a class="update_page_img_a" href="#id_image">Edit image url...</a>
+        </div>
+    </div>
+    <div class="update_form">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save changes</button>
+        </form>
+    </div>
+    <div>
+        <a title="Synchronizing product data from SEARS.COM" class="update_page_sync_button" href="{% url 'sync_product_info' pk=object.id product_id_sears=object.product_id %}">Update frome the store</a>
+    </div>
+    <div>
+        <a class="update_del_button" href="{% url 'product_delete' pk=product.id %}">Delete Product</a>
+    </div>
+    <div class="go_back_button"> 
+        <a href="{{ request.META.HTTP_REFERER }}">
+            <i class="fas fa-arrow-left"></i>
+            Go back
+        </a>
+    </div>
+{% endblock %}

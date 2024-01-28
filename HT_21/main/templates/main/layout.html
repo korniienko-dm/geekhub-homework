@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'main/img/favicon.ico' %}" />
+    <script src="{% static 'main/js/hide_message_block.js' %}"></script>
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="containner clearfix">
+            <div class="aside_menu">
+                <div class="logo-wrapper">
+                    <a href="{% url 'home' %}"><img src="{% static 'main/img/01-logo.png' %}" alt="Site Logo"></a>
+                </div>
+                <div class="nav">
+                    <ul>
+                        <li>
+                            <i class="fas fa-home"></i>
+                            <a href="{% url 'home' %}">Home page</a>
+                        </li>
+                        
+                        {% if user.is_superuser %}
+                            <li>
+                                <i class="fas fa-plus-circle"></i>
+                                <a href="{% url 'add_products' %}">Add Products</a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <i class="fas fa-tasks"></i>
+                            <a href="{% url 'show_products' %}">Products</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li>
+                                <i class="fas fa-shopping-cart"></i>
+                                <a href="{% url 'cart_page' %}">Cart</a>
+                                <span class="count_product">{{ request.session.product_data.cart_list|length }}</span>
+                            </li>
+                        {% endif %}
+                        <li class="authentication_section">
+                            {% if user.is_authenticated %}
+                                <span class="auth_name_text">Hello,
+                                    <span class="auth_name">{{ user.username }}</span>!
+                                </span>  
+                                <form method="post" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    <button type="submit">LOG OUT</button>
+                                </form>                                      
+                            {% else %}
+                                
+                                <i class="fas fa-door-open"></i>
+                                <a href="{% url 'login' %}">LOG IN</a>                          
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

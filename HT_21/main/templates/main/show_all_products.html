@@ -1,0 +1,86 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Your products
+{% endblock %}
+
+{% block content %}
+    <h1>Your products</h1>
+    <p class="mrg_bt_30"> 
+        The <strong>"All Products" page</strong> serves as your dashboard, displaying an overview of all the products.
+    </p>
+        <div class="category_list_wrapper">
+            <p>Product categories:</p>
+            <div class="category_list">    
+                {% if categories %}
+                    {% for category in categories %}
+                        <div class="a_wrap">
+                            <a class="category_link" href="{% url 'show_products_in_category' category_name=category.name %}">{{ category.name }}</a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div> 
+        </div>
+        {% if products %}    
+        <table class="table">
+            <col style="width:20%">
+            <thead>
+            <tr>
+                <th>Product name:</th>
+                <th>Image:</th>
+                <th>Brand name:</th>
+                <th>Price:</th>
+                <th>Category:</th>
+                <th>Details Page:</th>
+                {% if user.is_superuser %}
+                    <th>Edit Product:</th>
+                    <th>Delete Product:</th>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <th>Add to Cart:</th>
+                {% endif %}
+            </tr>
+            </thead>
+                {% for element in products %}
+                    <tr>
+                        <td>{{ element.name }}</td>
+                        <td class="td_item"><img width="50" src="{{ element.image }}" alt="{{ element.name }}"> </td>
+                        <td class="td_item">{{ element.brand }}</td>
+                        <td class="td_item">${{ element.price }}</td>
+                        <td class="td_item">
+                            <a href="{% url 'show_products_in_category' category_name=element.category %}">{{ element.category }}</a>
+                        </td>
+                        <td class="td_item"><a href="{% url 'product_details' element.id %}"><i class="fas fa-info-circle"></i>Details</a></td>
+                        {% if user.is_superuser %}
+                            <td class="td_item"><a href="{% url 'product_update' pk=element.id %}"><i class="fas fa-edit"></i>Edit Product</a></td>
+                            <td class="td_item"><a href="{% url 'product_delete' pk=element.id %}"><i class="fas fa-trash"></i>Delete</a></td>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                            <td class="td_item">
+                                <a class="td_cart" href="{% url 'swap_product_in_cart' %}?product_id={{ element.id }}">
+                                    {% if element.id|stringformat:"s" in request.session.id_list %}
+                                        <img src="{% static 'cart/img/inside_cart.png' %}" alt="Delete product from Cart" title="Delete product from Cart">
+                                    {% else %}
+                                        <img src="{% static 'cart/img/add_cart.png' %}" alt="Add product to Cart" title="Add product to Cart">
+                                    {% endif %}
+                                </a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+        </table>
+    {% else %}
+        <div class="empty_product_list">
+            <p><strong>You don't have any added products yet.</strong> </p>
+            <p>Please visit the page: <a href="{% url 'add_products' %}">"Add product"</a> and add the products to your list.</p>   
+        </div>
+    {% endif %}
+    <div class="go_back_button"> 
+        <a href="{{ request.META.HTTP_REFERER }}">
+            <i class="fas fa-arrow-left"></i>
+            Go back
+        </a>
+    </div>
+
+{% endblock %}

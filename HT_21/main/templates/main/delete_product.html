@@ -1,0 +1,25 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Delete Product: {{ object.name }} 
+{% endblock %}
+
+{% block content %}
+    <h1 class="important_text_red   disp_inline_block">Delete Product: </h1>
+    <span class="h1-text-style">{{ object.name }}</span>
+    <div class="delete_form">
+        <img class="prod_img" width="350"  src="{{ object.image }}" alt="{{ object.name }}">
+        <div class="prod_spec_sh_descr">{{ object.short_description|safe }}</div>        
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <button type="submit" class="button-attention">Delete product</button>
+        </form>
+    </div>
+    <div class="go_back_button"> 
+        <a href="{{ request.META.HTTP_REFERER }}">
+            <i class="fas fa-arrow-left"></i>
+            Go back
+        </a>
+    </div>
+{% endblock %}
