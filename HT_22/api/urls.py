@@ -18,5 +18,4 @@ urlpatterns = [
 
     path('api/v1/cartlist/', CartAPIView.as_view()),
     path('api/v1/cartlist/<int:pk>/', CartAPIView.as_view()),
-    # path('api/v1/cartlist/<int:pk>/', CartAPIView.as_view()),
 ]

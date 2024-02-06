@@ -121,9 +121,7 @@ class CartAPIView(APIView):
     def delete(self, request, *args, **kwargs):
         """DELETE method for removing a product from the shopping cart."""
         product_id_delete = str(request.data.get('product_id'))
-        # pk = kwargs.get("pk", None)
-        # product_id_delete = str(pk)
-        
+
         cart_manage = CartManageProduct(
             request=request,
             product_id=product_id_delete,
