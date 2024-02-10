@@ -1,0 +1,96 @@
+{% extends 'main/layout.html' %} 
+{% load static %}
+
+{% block title %}
+    Cart Page
+{% endblock %}
+
+{% block content %}
+    <script src="{% static 'main/js/ajax_clean_cart.js' %}"></script>
+    <script src="{% static 'main/js/ajax_del_prod_form_cart.js' %}"></script>
+    <script src="{% static 'main/js/ajax_change_prod_count_in_cart.js' %}"></script>
+    <h1>Your cart</h1>
+    <p class="mrg_bt_30"> 
+        The <strong>"Cart" page</strong> displays the products that you added tothecarton the
+        page: <strong><a class="section" href="{% url 'show_products' %}">"My Products"</a></strong>
+    </p>
+    <div id="cart_wrapper">
+    {% if request.session.product_data.cart_list %}
+        <div>
+            <table class="table">
+                <col style="width:28%">
+                <col style="width:12%">
+                <col style="width:12%">
+                <col style="width:12%"> 
+                <col style="width:12%">
+                <col style="width:12%">
+                <col style="width:12%">
+                <thead>
+                <tr>
+                    <th>Product name:</th>
+                    <th>Image:</th>
+                    <th>Brand name:</th>
+                    <th>Details Page:</th>
+                    <th>Quantity :</th>
+                    <th>Total price:</th>
+                    <th>Delete:</th>
+                </tr>
+                </thead>
+                    {% for product in products %}
+                        {% if product.id|stringformat:"s" in request.session.id_list %}
+                            <tr>
+                                <td>{{ product.name }}</td>
+                                <td class="td_item"><img width="50" src="{{ product.image }}" alt="{{ product.name }}"> </td>
+                                <td class="td_item">{{ product.brand }}</td>
+                                <td class="td_item"><a href="{% url 'product_details' product.id %}">Details</a></td>
+                                <td class="td_item">
+                                    <form class="cart_form" data-id="{{ product.id }}" data-price="{{ product.price }}">
+                                        {% csrf_token %}
+                                        <label for="numberInput">Quantity (min 1):</label>
+                                        <input type="number" class="numberInput" id="quantity_product_{{ product.id }}" name="quantity" min="1" max="999" required
+                                            value="{% for item in request.session.product_data.cart_list %}{% if item.product_id == product.id|stringformat:"s" %}{{ item.product_quantity }}{% endif %}{% endfor %}">
+                                        <button type="button" class="updateQuantityBtn">Ok</button>
+                                    </form>
+                                </td>
+                                <td class="td_item" id="price_product_{{ product.id }}">$
+                                    {% for item in request.session.product_data.cart_list %}
+                                        {% if item.product_id == product.id|stringformat:"s" %}
+                                            {% if item.price %}
+                                                {{ item.price }}
+                                            {% else %}
+                                                {{ product.price }}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td class="td_item">
+                                    <a class="td_cart" href="{% url 'swap_cart' %}?product_id={{ product.id }}" data-product-id="{{ product.id }}">
+                                        <img src="{% static 'cart/img/del_from_cart.png' %}" alt="Delete product from the Cart">
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+            </table>
+        </div>
+        
+            <div class="clean_cart" id="clear_cart_btn">
+                <a href="{% url 'clean_cart' %}" class="clean_cart" id="a_btn">Сlean cart
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+        
+    {% else %}
+        <div class="empty_product_list">
+            <p><strong>You don't have any added products to <b>cart</b>.</strong> </p>
+            <p>Please visit the page: <a href="{% url 'show_products' %}">"Products"</a> and add the products to your cart.</p>   
+        </div>
+    {% endif %}
+    </div>
+    <div class="go_back_button"> 
+        <a href="{{ request.META.HTTP_REFERER }}">
+            <i class="fas fa-arrow-left"></i>
+            Go back
+        </a>
+    </div>
+{% endblock %}

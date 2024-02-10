@@ -121,4 +121,9 @@ ___
 ___
 
 > #### HT_22 : 30-01-2024  
-> ![HT_21 img](https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_22.png)
+> ![HT_22 img](https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_22.png)
+
+___
+
+> #### HT_23 : 06-02-2024  
+> ![HT_23 img](https://github.com/korniienko-dm/geekhub-homework/raw/main/img/ht_23.png)

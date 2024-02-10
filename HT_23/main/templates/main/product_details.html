@@ -1,0 +1,42 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    {{ product.name }}
+{% endblock %}
+
+{% block content %}
+<div class="prod-detail-wrapper">
+    <h1>{{ product.name }}</h1>
+    <img class="prod_img" width="350"  src="{{ product.image }}" alt="{{ product.name }}">
+    <div class="prod_spec_sh_descr">{{ product.short_description|safe }}</div>
+    <div class="prod_spec_lg_descr">{{ product.long_description|safe }}</div>  
+    <div class="prod_spec_wrapper">
+        <ul>
+            <li><span class="prod_spec">Product name:</span> {{ product.name }}</li>
+            <li><span class="prod_spec">Brand:</span> {{ product.brand }}</li>
+            <li><span class="prod_spec">Product ID:</span> {{ product.product_id }}</li>
+            <li><span class="prod_spec">Price:</span> ${{ product.price }}</li>
+            <li><span class="prod_spec">Seller:</span> {{ product.seller }}</li>
+        </ul>
+    </div>
+    <div class="prod_spec_wrapper_end">
+        <ul>
+            <li><span class="prod_spec">Parent category:</span> <a target="_blank" href="{{ product.parent_category_url}}">{{ product.parent_category}}</a></li>
+            <li><span class="prod_spec">Sears Product page:</span> <a target="_blank" href="{{ product.seo_url}}">Go to product page...</a></li>
+        </ul>    
+    </div>
+    <div>
+        <div>
+            {% if user.is_superuser %}
+                <a class="button-a-ok" href="{% url 'product_update' pk=product.id %}">Edit Product</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="go_back_button"> 
+    <a href="{{ request.META.HTTP_REFERER }}">
+        <i class="fas fa-arrow-left"></i>
+        Go back
+    </a>
+</div>
+{% endblock %}
