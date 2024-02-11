@@ -41,5 +41,6 @@ def delete_empty_category(sender, instance, **kwargs):
     """Deletes the category associated with the
     deleted product if it becomes empty."""
     category = instance.category
-    if category.products.count() == 0:
-        category.delete()
+    if category is not None:
+        if category.products.count() == 0:
+            category.delete()

@@ -124,7 +124,6 @@ class SearsProductScraping:
             'short_description': data['productDetail']['softhardProductdetails'][0]['shortDescription'] or 'None',
             'long_description': data['productDetail']['softhardProductdetails'][0]['longDescription'] or 'None',
             'seller': seller_data.get('soldBy', 'None') if seller_data else 'None',
-            # 'seller': data['productDetail']['softhardProductdetails'][0]['defaultSeller']['soldBy'] or 'None',
             'parent_category': data['productDetail']['softhardProductdetails'][0]['hierarchies']['specificHierarchy'][-1]['name'] or 'None',
             'parent_category_url': f"{base_url}{data['productDetail']['softhardProductdetails'][0]['hierarchies']['specificHierarchy'][-1]['seoURL'] or 'None'}",
         }

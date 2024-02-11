@@ -1,12 +1,16 @@
+import logging
 from rest_framework import serializers
 from main.models import Category
 from main.models import Product
+from utils.parser import SearsProductScraping
+from main.tasks import synchronization_product_info
 
 
 class ProductSerializer(serializers.ModelSerializer):
     """
     Serializer for the Product model.
-    """ 
+    """
+
     class Meta:
         model = Product
         fields = (
@@ -26,6 +30,11 @@ class ProductSerializer(serializers.ModelSerializer):
             'parent_category',
             'parent_category_url',
         )
+
+    def create(self, validated_data):
+        instance = super().create(validated_data)
+        synchronization_product_info.apply_async(args=[instance.id])
+        return instance
 
 
 class CategorySerializer(serializers.ModelSerializer):
