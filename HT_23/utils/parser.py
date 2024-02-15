@@ -8,6 +8,7 @@ This module provides a class:
 import requests
 import time
 import random
+from utils.logger import logger
 
 
 class SearsProductScraping:
@@ -19,10 +20,15 @@ class SearsProductScraping:
 
     def get_format_id(self):
         """Format the product ID."""
-        api_product_id = self.product_id.split("-")[1]
-        api_product_id.strip()
-        api_product_id.upper()
-        return api_product_id
+        try:
+            api_product_id = self.product_id.split("-")[1]
+            api_product_id.strip()
+            api_product_id.upper()
+            return api_product_id
+        except IndexError as e:
+            logger.error(
+                f"IndexError occurred while formatting product ID: {e}")
+            return None
 
     def get_api_link(self):
         """Generate a link for an API request."""
@@ -111,7 +117,8 @@ class SearsProductScraping:
         """Get information about the product through the Sears API."""
         base_url = 'https://www.sears.com'
         data = self.get_response_from_api()
-        seller_data = data.get('productDetail', {}).get('softhardProductdetails', [{}])[0].get('defaultSeller')
+        seller_data = data.get('productDetail', {}).get(
+            'softhardProductdetails', [{}])[0].get('defaultSeller')
         product_information = {
             'name': data['productDetail']['softhardProductdetails'][0]['descriptionName'] or 'None',
             'brand': data['productDetail']['softhardProductdetails'][0]['brandName'] or 'None',
